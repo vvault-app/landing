@@ -24,3 +24,22 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+/* Lissage texte */
+html,
+body {
+  @apply antialiased;
+}
+
+/* Optionnel : petite amélioration pour focus-visible */
+:focus-visible {
+  outline: 2px solid #e5e7eb;
+  outline-offset: 2px;
+}
