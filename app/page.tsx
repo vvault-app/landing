@@ -61,14 +61,24 @@ export default function HomePage() {
               store • send • track
             </span>
           </div>
+
+          {/* Desktop pill + text (en haut, comme avant) */}
+          <div className="hidden md:flex flex-col items-end gap-1 text-right">
+            <span className="rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] bg-lime-400/10 text-lime-300 border border-lime-400/40">
+              PRIVATE BETA
+            </span>
+            <span className="text-[11px] text-slate-500">
+              Built for producers & artists
+            </span>
+          </div>
         </header>
 
         {/* BODY GRID */}
         <main className="grid gap-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-start">
           {/* LEFT SECTION */}
           <section className="space-y-8">
-            {/* MOBILE pill + text (entre logo et titre) */}
-            <div className="flex flex-col items-center gap-2 text-center mb-2 md:hidden">
+            {/* Mobile pill + text (entre logo et titre) */}
+            <div className="flex flex-col items-center gap-2 text-center mb-10 md:hidden">
               <span className="rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] bg-lime-400/10 text-lime-300 border border-lime-400/40">
                 PRIVATE BETA
               </span>
@@ -98,7 +108,7 @@ export default function HomePage() {
 
             {/* FORM */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              {/* Ligne input + pill desktop */}
+              {/* Ligne input + bouton inline desktop */}
               <div className="flex flex-col md:flex-row md:items-end gap-4">
                 <div className="flex-1">
                   <label
@@ -119,29 +129,35 @@ export default function HomePage() {
                   />
                 </div>
 
-                {/* DESKTOP pill + text (sur la même ligne que l'input) */}
-                <div className="hidden md:flex flex-col items-end gap-1 text-right">
-                  <span className="rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] bg-lime-400/10 text-lime-300 border border-lime-400/40">
-                    PRIVATE BETA
-                  </span>
-                  <span className="text-[11px] text-slate-500">
-                    Built for producers & artists
-                  </span>
+                {/* Bouton inline desktop */}
+                <div className="hidden md:flex">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-100 text-slate-900 text-sm font-medium px-5 py-2.5 border border-slate-200 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition"
+                  >
+                    {isLoading ? "Joining..." : "Apply"}
+
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75 animate-ping"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-400"></span>
+                    </span>
+                  </button>
                 </div>
               </div>
 
-              {/* Bouton centré */}
-              <div className="flex justify-center pt-1">
+              {/* Bouton centré mobile */}
+              <div className="flex justify-center pt-1 md:hidden">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="inline-flex items-center gap-2 rounded-full bg-slate-100 text-slate-900 text-xs sm:text-sm font-medium px-5 py-2 border border-slate-200 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-100 text-slate-900 text-xs font-medium px-5 py-2 border border-slate-200 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition"
                 >
                   {isLoading ? "Joining..." : "Apply"}
 
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-lime-300 opacity-75 animate-ping"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-300"></span>
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75 animate-ping"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-400"></span>
                   </span>
                 </button>
               </div>
