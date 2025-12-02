@@ -1,4 +1,3 @@
-// app/page.tsx
 "use client";
 
 import { FormEvent, useState } from "react";
@@ -37,7 +36,6 @@ export default function HomePage() {
         return;
       }
 
-      console.error(error);
       setStatus("error");
       setMessage("Something went wrong. Please try again.");
       return;
@@ -51,10 +49,11 @@ export default function HomePage() {
   const isLoading = status === "loading";
 
   return (
-    <div className="min-h-screen bg-[#050509] text-slate-100 px-4 py-8 md:py-0 flex md:items-center md:justify-center">
+    <div className="min-h-screen bg-[#050509] text-slate-100 px-5 pt-10 pb-20 md:flex md:items-center md:justify-center">
       <div className="w-full max-w-3xl mx-auto">
-        {/* Top bar / logo */}
-        <header className="mb-8 md:mb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+        {/* HEADER */}
+        <header className="mb-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col leading-tight">
             <span className="text-sm font-semibold tracking-[0.22em] uppercase text-slate-300">
               VVAULT
@@ -64,46 +63,42 @@ export default function HomePage() {
             </span>
           </div>
 
-          <div className="flex flex-col items-start sm:items-end gap-1.5 text-left sm:text-right">
-            {/* PRIVATE BETA pill */}
+          <div className="flex flex-col items-start sm:items-end gap-2">
             <span className="rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] bg-lime-400/10 text-lime-300 border border-lime-400/40">
               PRIVATE BETA
             </span>
-
             <span className="text-[11px] text-slate-500">
               Built for producers & artists
             </span>
           </div>
         </header>
 
-        {/* Main content */}
-        <main className="grid gap-8 md:gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-start">
-          {/* Left side: hero + form */}
-          <section className="space-y-6">
-            <div className="space-y-3">
+        {/* BODY GRID */}
+        <main className="grid gap-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-start">
+
+          {/* LEFT SECTION */}
+          <section className="space-y-8">
+            <div className="space-y-4 leading-relaxed">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">
-  The ONLY{" "}
-  <span className="text-slate-100 underline decoration-slate-500/70 decoration-[1px] underline-offset-4">
-    sane way
-  </span>{" "}
-  to send your music.
-</h1>
+                The{" "}
+                <span className="text-slate-100 underline decoration-slate-500/70 decoration-[1px] underline-offset-4">
+                  proper way
+                </span>{" "}
+                to send your music.
+              </h1>
 
-
-              <p className="text-sm sm:text-base text-slate-400 max-w-lg">
+              <p className="text-sm sm:text-base text-slate-400 max-w-lg leading-relaxed">
                 vvault is the complete solution to{" "}
-                <span className="text-slate-300">
-                  store and organize your beats & songs
-                </span>
-                , <span className="text-slate-300">mass send to artists</span>,
+                <span className="text-slate-300">store and organize your beats & songs</span>,
+                <span className="text-slate-300"> mass send to artists</span>,
                 and track who actually opens, and downloads.
               </p>
             </div>
 
-            {/* Form */}
+            {/* FORM */}
             <form
               onSubmit={handleSubmit}
-              className="mt-4 flex flex-col sm:flex-row gap-3"
+              className="flex flex-col sm:flex-row gap-4"
             >
               <div className="flex-1">
                 <label
@@ -120,31 +115,29 @@ export default function HomePage() {
                   placeholder="adress@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-lg bg-[#0A0A10] border border-slate-800 px-4 py-2.5 text-sm outline-none placeholder:text-slate-600 focus:border-slate-400 focus:ring-1 focus:ring-slate-500/70 transition"
+                  className="w-full rounded-lg bg-[#0A0A10] border border-slate-800 px-4 py-3 text-sm outline-none placeholder:text-slate-600 focus:border-slate-400 focus:ring-1 focus:ring-slate-500/70 transition"
                 />
               </div>
 
-              <div className="flex items-end">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="inline-flex items-center gap-2 rounded-lg bg-slate-100 text-slate-900 text-sm font-medium px-5 py-2.5 whitespace-nowrap border border-slate-200 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition"
-                >
-                  {isLoading ? "Joining..." : "Apply"}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="inline-flex items-center gap-2 rounded-lg bg-slate-100 text-slate-900 text-sm font-medium px-6 py-3 whitespace-nowrap border border-slate-200 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition"
+              >
+                {isLoading ? "Joining..." : "Apply"}
 
-                  {/* Neon pulse */}
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-lime-300 opacity-75 animate-ping"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-300"></span>
-                  </span>
-                </button>
-              </div>
+                {/* Pulse */}
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-lime-300 opacity-75 animate-ping"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-300"></span>
+                </span>
+              </button>
             </form>
 
-            {/* Status message */}
+            {/* STATUS TEXT */}
             {message && (
               <p
-                className={`text-xs sm:text-sm ${
+                className={`text-xs sm:text-sm leading-relaxed ${
                   status === "success" ? "text-lime-300" : "text-red-400"
                 }`}
               >
@@ -153,51 +146,37 @@ export default function HomePage() {
             )}
           </section>
 
-          {/* Right side: product bullets */}
-          <aside className="space-y-4">
-            <div className="rounded-xl border border-slate-800 bg-[#07070D] p-4">
-              <h2 className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400 mb-3">
+          {/* RIGHT SECTION */}
+          <aside className="space-y-5">
+            <div className="rounded-xl border border-slate-800 bg-[#07070D] p-5">
+              <h2 className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400 mb-4">
                 What vvault does
               </h2>
 
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex gap-2">
-                  <span className="mt-[3px] h-1.5 w-1.5 rounded-full bg-slate-400" />
-                  <span>
-                    Store and organize all your beats & songs with auto BPM and
-                    key detection.
-                  </span>
+              <ul className="space-y-3 text-xs text-slate-300 leading-relaxed">
+                <li className="flex gap-3">
+                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span>Store and organize all your beats & songs with auto BPM and key detection.</span>
                 </li>
 
-                <li className="flex gap-2">
-                  <span className="mt-[3px] h-1.5 w-1.5 rounded-full bg-slate-400" />
-                  <span>
-                    Build packs and send them to multiple artists in one go{" "}
-                    <span className="italic text-slate-500">(without bcc)</span>.
-                  </span>
+                <li className="flex gap-3">
+                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span>Build packs and send them to multiple artists in one go <span className="italic text-slate-500">(without bcc)</span>.</span>
                 </li>
 
-                <li className="flex gap-2">
-                  <span className="mt-[3px] h-1.5 w-1.5 rounded-full bg-slate-400" />
-                  <span>
-                    Track opens, link clicks and file downloads per contact.
-                  </span>
+                <li className="flex gap-3">
+                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span>Track opens, link clicks and file downloads per contact.</span>
                 </li>
 
-                <li className="flex gap-2">
-                  <span className="mt-[3px] h-1.5 w-1.5 rounded-full bg-slate-400" />
-                  <span>
-                    Get detailed analytics and insights on when to send your
-                    tracks.
-                  </span>
+                <li className="flex gap-3">
+                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span>Get detailed analytics and insights on when to send your tracks.</span>
                 </li>
 
-                <li className="flex gap-2">
-                  <span className="mt-[3px] h-1.5 w-1.5 rounded-full bg-slate-400" />
-                  <span>
-                    Chrome extension for Gmail: add tracking without changing
-                    how you write emails.
-                  </span>
+                <li className="flex gap-3">
+                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span>Chrome extension for Gmail: add tracking without changing how you write emails.</span>
                 </li>
               </ul>
             </div>
