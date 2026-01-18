@@ -289,7 +289,7 @@ export default function HomePage() {
 
           <a
             href="https://vvault.app"
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white text-black px-4 py-2 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white px-4 py-2 text-sm font-semibold text-black shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
           >
             Launch app
             <ArrowRight className="h-4 w-4" />
@@ -297,8 +297,8 @@ export default function HomePage() {
         </nav>
       </div>
 
-      {/* hero */}
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-96px)] w-full max-w-5xl items-center px-5 pb-16">
+      {/* HERO (restored spacing like the old page: one full screen block) */}
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-104px)] w-full max-w-5xl items-center px-5 pb-12">
         <motion.div initial="hidden" animate="show" variants={heroVariants} className="w-full">
           <div className="mx-auto max-w-2xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-white/70">
@@ -338,7 +338,7 @@ export default function HomePage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isLoading ? "Joining..." : "Reserve my spot"}
                 <ArrowRight className="h-4 w-4" />
@@ -355,157 +355,12 @@ export default function HomePage() {
               </p>
             ) : null}
           </form>
-
-          {/* schedule card */}
-          <div className="mx-auto mt-8 w-full max-w-4xl px-1">
-            <div className="rounded-3xl bg-[#070709] shadow-[0_14px_60px_rgba(0,0,0,0.65)] overflow-hidden border border-white/10">
-              <div className="px-5 py-5 sm:px-6 sm:py-6">
-                <div className="text-sm font-semibold text-white/90">Beta spots schedule</div>
-                {dropsError ? <div className="mt-2 text-xs text-red-300">{dropsError}</div> : null}
-              </div>
-
-              <div className="h-px w-full bg-white/10" />
-
-              {drops === null && !dropsError ? (
-                <div className="p-4 sm:p-5 space-y-2">
-                  {Array.from({ length: 7 }).map((_, i) => (
-                    <div key={i} className="h-11 rounded-2xl bg-[#121216] animate-pulse" />
-                  ))}
-                </div>
-              ) : null}
-
-              {drops && drops.length > 0 ? (
-                <div className="p-4 sm:p-5 space-y-2">
-                  {drops.map((d, idx) => {
-                    const state = getDropState(d);
-                    const isSoldOut = state.kind === "soldout";
-
-                    const sold = clamp(d.total_spots - d.spots_left, 0, d.total_spots);
-                    const ratio = d.total_spots > 0 ? sold / d.total_spots : 0;
-
-                    const isHighlight = nextHighlightId === d.id;
-
-                    const rowBg = isHighlight ? "bg-[#111114]" : "bg-[#0d0d10]";
-                    const dim = isSoldOut ? "opacity-35 saturate-0" : "opacity-100";
-
-                    const shadow = isHighlight
-                      ? "shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_24px_80px_rgba(0,0,0,0.7)]"
-                      : "";
-
-                    const pill =
-                      state.kind === "soldout"
-                        ? { text: "Sold out", cls: "bg-[#2a1216] text-red-300" }
-                        : state.kind === "upcoming"
-                        ? { text: "Upcoming", cls: "bg-[#141418] text-white/70" }
-                        : { text: `${d.spots_left} left`, cls: "bg-[#141418] text-white/90" };
-
-                    const showCountdown =
-                      isHighlight &&
-                      state.kind === "upcoming" &&
-                      nextUpcomingDrop?.id === d.id &&
-                      countdown.active;
-
-                    const trackH = isHighlight ? "h-2" : "h-1.5";
-
-                    return (
-                      <motion.div
-                        key={d.id}
-                        layout
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.35, ease: "easeOut", delay: idx * 0.02 }}
-                        whileHover={{ y: prefersReducedMotion ? 0 : -1 }}
-                        className={`rounded-2xl ${rowBg} ${dim} ${shadow} px-4 py-3`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className="min-w-[190px]">
-                            <div
-                              className={`font-semibold leading-none ${
-                                isHighlight ? "text-base text-white" : "text-sm text-white/90"
-                              }`}
-                            >
-                              {formatDropDate(d.drop_date)}
-                              <span className={`ml-2 font-medium ${isHighlight ? "text-white/55" : "text-white/45"}`}>
-                                · {d.total_spots} spots
-                              </span>
-                            </div>
-
-                            {showCountdown ? (
-                              <div className="mt-2 text-sm text-white/80">
-                                Drops in{" "}
-                                <span className="font-semibold text-white">
-                                  {countdown.days}d {pad2(countdown.hours)}:{pad2(countdown.minutes)}:
-                                  {pad2(countdown.seconds)}
-                                </span>
-                              </div>
-                            ) : null}
-                          </div>
-
-                          <div className="flex-1">
-                            <div className={`w-full overflow-hidden rounded-full bg-[#050506] ${trackH}`}>
-                              {isHighlight ? (
-                                <motion.div
-                                  className="h-full rounded-full"
-                                  initial={false}
-                                  animate={
-                                    prefersReducedMotion
-                                      ? { width: `${Math.round(ratio * 100)}%` }
-                                      : {
-                                          width: `${Math.round(ratio * 100)}%`,
-                                          backgroundPosition: ["0% 50%", "120% 50%"],
-                                        }
-                                  }
-                                  transition={
-                                    prefersReducedMotion
-                                      ? { duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-                                      : {
-                                          width: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
-                                          backgroundPosition: { duration: 2.6, repeat: Infinity, ease: "linear" },
-                                        }
-                                  }
-                                  style={{
-                                    backgroundImage:
-                                      "linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.58), rgba(30,30,30,0.95), rgba(255,255,255,0.85), rgba(0,0,0,0.9), rgba(255,255,255,0.95))",
-                                    backgroundSize: "260% 100%",
-                                    backgroundPosition: "0% 50%",
-                                  }}
-                                />
-                              ) : (
-                                <motion.div
-                                  className="h-full rounded-full bg-white/45"
-                                  initial={false}
-                                  animate={{ width: `${Math.round(ratio * 100)}%` }}
-                                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                                />
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-end">
-                            <span
-                              className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold ${pill.cls}`}
-                            >
-                              {pill.text}
-                            </span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              ) : null}
-
-              {drops && drops.length === 0 && !dropsError ? (
-                <div className="px-5 py-5 text-sm text-white/60">Schedule will appear here soon.</div>
-              ) : null}
-            </div>
-          </div>
         </motion.div>
       </div>
 
-      {/* video */}
-      <div className="relative z-10 mx-auto w-full max-w-4xl px-5 pb-20">
-        <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/60">
+      {/* VIDEO (moved BEFORE schedule) */}
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-5 -mt-20 pb-10">
+        <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-[0_14px_60px_rgba(0,0,0,0.65)]">
           <div className="aspect-video w-full">
             <iframe
               className="h-full w-full"
@@ -517,6 +372,159 @@ export default function HomePage() {
               allowFullScreen
             />
           </div>
+        </div>
+      </div>
+
+      {/* SCHEDULE (spacing restored: sits clearly under video, not cramped into hero) */}
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-5 pb-20">
+        <div className="rounded-3xl bg-[#070709] shadow-[0_14px_60px_rgba(0,0,0,0.65)] overflow-hidden border border-white/10">
+          <div className="px-5 py-5 sm:px-6 sm:py-6">
+            <div className="text-sm font-semibold text-white/90">Beta spots schedule</div>
+            {dropsError ? <div className="mt-2 text-xs text-red-300">{dropsError}</div> : null}
+          </div>
+
+          <div className="h-px w-full bg-white/10" />
+
+          {drops === null && !dropsError ? (
+            <div className="p-4 sm:p-5 space-y-2">
+              {Array.from({ length: 7 }).map((_, i) => (
+                <div key={i} className="h-11 rounded-2xl bg-[#121216] animate-pulse" />
+              ))}
+            </div>
+          ) : null}
+
+          {drops && drops.length > 0 ? (
+            <div className="p-4 sm:p-5 space-y-2">
+              {drops.map((d, idx) => {
+                const state = getDropState(d);
+                const isSoldOut = state.kind === "soldout";
+
+                const sold = clamp(d.total_spots - d.spots_left, 0, d.total_spots);
+                const ratio = d.total_spots > 0 ? sold / d.total_spots : 0;
+
+                const isHighlight = nextHighlightId === d.id;
+
+                const rowBg = isHighlight ? "bg-[#111114]" : "bg-[#0d0d10]";
+                const dim = isSoldOut ? "opacity-35 saturate-0" : "opacity-100";
+
+                const shadow = isHighlight
+                  ? "shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_24px_80px_rgba(0,0,0,0.7)]"
+                  : "";
+
+                const pill =
+                  state.kind === "soldout"
+                    ? { text: "Sold out", cls: "bg-[#2a1216] text-red-300" }
+                    : state.kind === "upcoming"
+                    ? { text: "Upcoming", cls: "bg-[#141418] text-white/70" }
+                    : { text: `${d.spots_left} left`, cls: "bg-[#141418] text-white/90" };
+
+                const showCountdown =
+                  isHighlight &&
+                  state.kind === "upcoming" &&
+                  nextUpcomingDrop?.id === d.id &&
+                  countdown.active;
+
+                const trackH = isHighlight ? "h-2" : "h-1.5";
+
+                return (
+                  <motion.div
+                    key={d.id}
+                    layout
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut", delay: idx * 0.02 }}
+                    whileHover={{ y: prefersReducedMotion ? 0 : -1 }}
+                    className={`rounded-2xl ${rowBg} ${dim} ${shadow} px-4 py-3`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="min-w-[190px]">
+                        <div
+                          className={`font-semibold leading-none ${
+                            isHighlight ? "text-base text-white" : "text-sm text-white/90"
+                          }`}
+                        >
+                          {formatDropDate(d.drop_date)}
+                          <span
+                            className={`ml-2 font-medium ${
+                              isHighlight ? "text-white/55" : "text-white/45"
+                            }`}
+                          >
+                            · {d.total_spots} spots
+                          </span>
+                        </div>
+
+                        {showCountdown ? (
+                          <div className="mt-2 text-sm text-white/80">
+                            Drops in{" "}
+                            <span className="font-semibold text-white">
+                              {countdown.days}d {pad2(countdown.hours)}:{pad2(countdown.minutes)}:
+                              {pad2(countdown.seconds)}
+                            </span>
+                          </div>
+                        ) : null}
+                      </div>
+
+                      <div className="flex-1">
+                        <div className={`w-full overflow-hidden rounded-full bg-[#050506] ${trackH}`}>
+                          {isHighlight ? (
+                            <motion.div
+                              className="h-full rounded-full"
+                              initial={false}
+                              animate={
+                                prefersReducedMotion
+                                  ? { width: `${Math.round(ratio * 100)}%` }
+                                  : {
+                                      width: `${Math.round(ratio * 100)}%`,
+                                      backgroundPosition: ["0% 50%", "120% 50%"],
+                                    }
+                              }
+                              transition={
+                                prefersReducedMotion
+                                  ? { duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+                                  : {
+                                      width: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+                                      backgroundPosition: {
+                                        duration: 2.6,
+                                        repeat: Infinity,
+                                        ease: "linear",
+                                      },
+                                    }
+                              }
+                              style={{
+                                backgroundImage:
+                                  "linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.58), rgba(30,30,30,0.95), rgba(255,255,255,0.85), rgba(0,0,0,0.9), rgba(255,255,255,0.95))",
+                                backgroundSize: "260% 100%",
+                                backgroundPosition: "0% 50%",
+                              }}
+                            />
+                          ) : (
+                            <motion.div
+                              className="h-full rounded-full bg-white/45"
+                              initial={false}
+                              animate={{ width: `${Math.round(ratio * 100)}%` }}
+                              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                            />
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-end">
+                        <span
+                          className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold ${pill.cls}`}
+                        >
+                          {pill.text}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ) : null}
+
+          {drops && drops.length === 0 && !dropsError ? (
+            <div className="px-5 py-5 text-sm text-white/60">Schedule will appear here soon.</div>
+          ) : null}
         </div>
       </div>
     </div>
