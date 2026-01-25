@@ -22,7 +22,7 @@ const variants: Record<ButtonVariant, string> = {
     "border border-white/20 bg-transparent text-white/80 hover:text-white hover:border-white/30",
   ghost: "text-white/70 hover:text-white",
   soft: "border border-white/10 bg-white/5 text-white/70 hover:bg-white/10",
-  accent: "border border-white/20 bg-white text-black hover:bg-white/90",
+  accent: "bg-white text-black hover:bg-white/90",
 };
 
 const sizes: Record<ButtonSize, string> = {

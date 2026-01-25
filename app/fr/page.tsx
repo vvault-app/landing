@@ -33,12 +33,12 @@ type Feature = {
 const APP_BASE = "https://vvault.app";
 const BILLING_URL = "https://vvault.app/billing";
 
-/** 👇 Adjust here if needed */
+/** 👇 Ajuste ici si besoin */
 const PRICING = {
   pro: {
     monthly: 8.99,
-    annual: 8.99 * 10, // 2 months free (adjust if your pricing differs)
-    lifetime: 8.99 * 36, // "3 years forever" (adjust if you have a fixed price)
+    annual: 8.99 * 10, // 2 mois offerts (modifie si ton pricing réel est différent)
+    lifetime: 8.99 * 36, // "3 ans pour toujours" (modifie si tu as un prix fixe)
   },
   ultra: {
     monthly: 24.99,
@@ -50,59 +50,59 @@ const PRICING = {
 const HERO_STATS: Feature[] = [
   {
     icon: BarChart3,
-    title: "Real tracking",
-    desc: "opens • listen time • downloads",
+    title: "Tracking réel",
+    desc: "opens • temps d’écoute • downloads",
   },
   {
     icon: Cloud,
     title: "Packs & collabs",
-    desc: "private cloud • clean links • series",
+    desc: "cloud privé • liens propres • série",
   },
   {
     icon: ShieldCheck,
-    title: "Secure sales",
-    desc: "Stripe payments • Ultra: 0% vvault fees*",
+    title: "Ventes sécurisées",
+    desc: "paiement Stripe • Ultra: 0% fees vvault*",
   },
 ];
 
 const FEATURES_PRIMARY: Feature[] = [
   {
     icon: BarChart3,
-    title: "Analytics that save time",
-    desc: "See who opens, listens, how long, and who downloads — so you follow up at the right moment instead of guessing.",
+    title: "Analytics qui font gagner du temps",
+    desc: "Suis qui ouvre, qui écoute, combien de temps, et qui télécharge — pour relancer au bon moment au lieu de “forcer au hasard”.",
   },
   {
     icon: Mail,
-    title: "Sends & campaigns",
-    desc: "Build packs, send to contacts, and keep the full history. Pro = mass send. Ultra = best-time scheduling + individual sends inside a campaign.",
+    title: "Envois & campagnes",
+    desc: "Crée des packs, envoie à tes contacts, et garde l’historique. Pro = mass send. Ultra = scheduling au meilleur moment + envois individuels dans une campagne.",
   },
   {
     icon: ShoppingBag,
-    title: "Sell your drumkits & licenses",
-    desc: "Secure payments via Stripe. Pro = 5% vvault fees. Ultra = 0% vvault fees (Stripe still applies).",
+    title: "Vends tes drumkits & licences",
+    desc: "Paiements sécurisés via Stripe. Pro = 5% de frais vvault. Ultra = 0% de frais vvault (hors Stripe).",
   },
 ];
 
 const FEATURES_SECONDARY: Feature[] = [
   {
     icon: Cloud,
-    title: "Private workspace (cloud)",
-    desc: "Store, organize, collaborate. Free = 100MB. Pro/Ultra = serious usage (large storage / unlimited if you want).",
+    title: "Workspace privé (cloud)",
+    desc: "Stocke, organise, collabore. Free = 100MB. Pro/Ultra = usage sérieux (stockage large / illimité selon ta politique).",
   },
   {
     icon: ShieldCheck,
-    title: "Clean links & public pages",
-    desc: "Share your packs with a clean experience. Ultra = custom domain + colors + auto QR + embed player.",
+    title: "Liens propres & pages publiques",
+    desc: "Partage tes packs avec une expérience clean. Ultra = domaine custom + couleur + QR auto + embed player.",
   },
   {
     icon: Sparkles,
-    title: "Ultra = optimization & scale",
-    desc: "Compare campaigns, export CSV, and (soon) cohorts. Ultra gives you the tools to see what works and double down.",
+    title: "Ultra = optimisation & scale",
+    desc: "Compare tes campagnes, export CSV, et (bientôt) cohortes. Ultra te donne les outils pour comprendre ce qui marche et doubler dessus.",
   },
 ];
 
 function euro(v: number) {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: 2,
@@ -111,12 +111,12 @@ function euro(v: number) {
 
 function buildAppUrl(path: string, params?: Record<string, string>) {
   const url = new URL(path, APP_BASE);
-  // Default UTMs (adjust if needed)
+  // UTMs de base (tu peux les changer)
   url.searchParams.set("utm_source", "get.vvault.app");
   url.searchParams.set("utm_medium", "landing");
   url.searchParams.set("utm_campaign", "default");
 
-  // Onboarding parameter (optional)
+  // Paramètre d'onboarding (optionnel)
   url.searchParams.set("trial", "pro7");
 
   if (params) {
@@ -317,33 +317,33 @@ export default function HomePage() {
       const msg = (error.message || "").toLowerCase();
       if (error.code === "23505" || msg.includes("duplicate")) {
         setStatus("success");
-        setMessage("Already on the list ✅");
+        setMessage("Déjà inscrit·e ✅");
         return;
       }
       setStatus("error");
-      setMessage("Error. Try again in a moment.");
+      setMessage("Erreur. Réessaie dans un instant.");
       return;
     }
 
     setStatus("success");
-    setMessage("You're in ✅ You'll receive updates and resources.");
+    setMessage("Inscrit·e ✅ Tu recevras les updates et ressources.");
     setEmail("");
     setWaitlistCount((prev) => (typeof prev === "number" ? prev + 1 : prev));
   }
 
   const proPrice =
     billing === "monthly"
-      ? `${euro(PRICING.pro.monthly)}/mo`
+      ? `${euro(PRICING.pro.monthly)}/mois`
       : billing === "annual"
-      ? `${euro(PRICING.pro.annual)}/yr`
-      : `${euro(PRICING.pro.lifetime)} one-time`;
+      ? `${euro(PRICING.pro.annual)}/an`
+      : `${euro(PRICING.pro.lifetime)} une fois`;
 
   const ultraPrice =
     billing === "monthly"
-      ? `${euro(PRICING.ultra.monthly)}/mo`
+      ? `${euro(PRICING.ultra.monthly)}/mois`
       : billing === "annual"
-      ? `${euro(PRICING.ultra.annual)}/yr`
-      : `${euro(PRICING.ultra.lifetime)} one-time`;
+      ? `${euro(PRICING.ultra.annual)}/an`
+      : `${euro(PRICING.ultra.lifetime)} une fois`;
 
   const floatSlow = prefersReducedMotion
     ? undefined
@@ -425,13 +425,13 @@ export default function HomePage() {
               href="#features"
               className="rounded-full px-3 py-2 text-xs font-semibold text-white/70 hover:text-white"
             >
-              Features
+              Fonctionnalités
             </a>
             <a
               href="#pricing"
               className="rounded-full px-3 py-2 text-xs font-semibold text-white/70 hover:text-white"
             >
-              Pricing
+              Prix
             </a>
             <a
               href="#faq"
@@ -448,12 +448,12 @@ export default function HomePage() {
               size="sm"
               className="hidden sm:inline-flex"
             >
-              <a href={buildAppUrl("/login")}>Log in</a>
+              <a href={buildAppUrl("/login")}>Se connecter</a>
             </Button>
 
             <Button asChild size="sm" variant="accent">
               <a href={buildAppUrl("/signup", { plan: "free" })}>
-                Start free
+                Commencer gratuit
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
@@ -468,27 +468,28 @@ export default function HomePage() {
             {typeof waitlistCount === "number" ? (
               <div className="inline-flex flex-wrap items-center justify-center gap-2">
                 <Badge className="text-[11px] normal-case" variant="accent">
-                  {waitlistCount.toLocaleString()} producers joined
+                  {waitlistCount.toLocaleString()} producteurs inscrits
                 </Badge>
               </div>
             ) : null}
 
             <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
-              Send your beats like a pro.
+              Envoie tes beats comme un pro.
               <span className="mt-3 block text-white/70">
-                Packs + tracking + follow-ups + sales — in a single link.
+                Packs + tracking + relances + ventes — en un seul lien.
               </span>
             </h1>
 
             <p className="mt-4 text-sm text-white/60 sm:text-base">
-              vvault is your private workspace to store, organize, sell, and send your music —
-              with detailed analytics to see what artists actually do with your beats.
+              vvault est ton workspace privé pour stocker, organiser, vendre et envoyer ta
+              musique — avec des analytics détaillées pour savoir ce que les artistes font
+              vraiment avec tes sons.
             </p>
 
             <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" variant="accent" className="w-full sm:w-auto">
                 <a href={buildAppUrl("/signup", { plan: "free" })}>
-                  Create my account for free
+                  Créer mon compte gratuitement
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
@@ -512,7 +513,7 @@ export default function HomePage() {
             </div>
 
             <p className="mt-4 text-xs text-white/45">
-              * Stripe fees excluded. “vvault fees” = marketplace / platform fees.
+              * Hors frais Stripe. Les “fees vvault” = frais de marketplace / plateforme.
             </p>
           </div>
         </motion.div>
@@ -542,9 +543,9 @@ export default function HomePage() {
         <Reveal>
           <SectionTitle
             id="features"
-            kicker="Built for placements"
-            title="Your whole beatmaker workflow in one place"
-            desc="Stop sending random Drive links. vvault gives you a clear process: send, measure, follow up, close."
+            kicker="Pensé pour les placements"
+            title="Tout le workflow beatmaker, au même endroit"
+            desc="Arrête d’envoyer des Drive links au hasard. vvault te donne un process clair : envoyer, mesurer, relancer, closer."
           />
         </Reveal>
 
@@ -584,9 +585,9 @@ export default function HomePage() {
         <Reveal>
           <SectionTitle
             id="pricing"
-            kicker="Simple & clear"
-            title="Choose your plan — start free"
-            desc="Start on Free. Upgrade only if you want to send, track, or scale."
+            kicker="Simple & clair"
+            title="Choisis ton plan — commence gratuit"
+          desc="À l’inscription, tu démarres en Free. Tu upgrades seulement si tu veux envoyer / tracker / scaler."
           />
         </Reveal>
 
@@ -602,7 +603,7 @@ export default function HomePage() {
                   billing === b ? "bg-white text-black" : "text-white/70 hover:text-white"
                 )}
               >
-                {b === "monthly" ? "Monthly" : b === "annual" ? "Annual (-2 months)" : "Lifetime"}
+                {b === "monthly" ? "Mensuel" : b === "annual" ? "Annuel (-2 mois)" : "Lifetime"}
               </button>
             ))}
           </div>
@@ -612,66 +613,66 @@ export default function HomePage() {
           <Reveal delay={0.1} className="h-full">
             <PlanCard
               name="Free"
-              badge="Starter"
-              priceLine="€0"
-              subLine="Start free"
+              badge="Pour tester"
+              priceLine="0€"
+              subLine="Commence gratuit"
               features={[
-                "Chrome extension: open tracking (MailSuite-style)",
-                "100MB storage",
-                "Full contacts list",
-                "Generate shareable links",
+                "Extension Chrome : tracking des opens (type MailSuite)",
+                "100MB de stockage",
+                "Liste de contacts complète",
+                "Génère des liens à partager",
               ]}
-              ctaLabel="Start free"
+              ctaLabel="Commencer gratuitement"
               ctaHref={buildAppUrl("/signup", { plan: "free" })}
-              footnote="Great to set up your workspace. Go Pro only if you want to go further."
+              footnote="Idéal pour setup ton workspace. Tu passes en Pro seulement si tu veux aller plus loin."
             />
           </Reveal>
 
           <Reveal delay={0.18} className="h-full">
             <PlanCard
               name="Pro"
-              badge={billing === "annual" ? "2 months free" : "Most popular"}
+              badge={billing === "annual" ? "2 mois offerts" : "Le plus populaire"}
               priceLine={proPrice}
-              subLine="Serious outreach & placements"
+              subLine="Placements & outreach sérieux"
               highlight
               features={[
-                "Mass email campaigns",
-                "Deep analytics",
-                "Email/subscribe gate before free download",
-                "vvault fees: 5% on sales (Stripe excluded)",
-                "Large storage (recommended: unlimited / fair use on paid)",
+                "Mass send emails (campagnes)",
+                "Analytics approfondies",
+                "Email/subscribe gate avant téléchargement gratuit",
+                "Frais vvault : 5% sur les ventes (hors Stripe)",
+                "Stockage large (recommandé: illimité/fair use en payé)",
               ]}
-              ctaLabel="Go Pro"
+              ctaLabel="Démarrer Pro"
               ctaHref={BILLING_URL}
-              footnote="Recommendation: keep the 100MB limit only on Free. On paid Pro, avoid blocking uploads."
+              footnote="Recommandation : garde la limite 100MB seulement sur le TRIAL. En Pro payé, évite de bloquer l’upload."
             />
           </Reveal>
 
           <Reveal delay={0.26} className="h-full">
             <PlanCard
               name="Ultra"
-              badge="Scale"
+              badge="Pour scaler"
               priceLine={ultraPrice}
-              subLine="Automation, branding & 0% vvault fees"
+              subLine="Automation, branding & 0% fees vvault"
               features={[
                 "Series",
-                "Follow-up suggestions + listening profiles + “what to send”",
-                "Scheduling: best time + individual sends inside a campaign",
-                "0% vvault fees on sales (Stripe excluded)",
-                "Custom domain + colors + auto QR + embed player",
-                "Compare campaigns (sort + export) + CSV export",
+                "Follow-up suggestions + profils d’écoute + “quoi envoyer”",
+                "Scheduling : best time + envois individuels dans une campagne",
+                "0% frais vvault sur les ventes (hors Stripe)",
+                "Domaine custom + couleurs + QR auto + embed player",
+                "Compare campagnes (tri + export) + export CSV",
               ]}
-              ctaLabel="Go Ultra"
+              ctaLabel="Passer Ultra"
               ctaHref={BILLING_URL}
-              footnote="Ultra is for teams who sell/send a lot and want to optimize with stats + automation."
+              footnote="Ultra = pour ceux qui vendent / envoient beaucoup, et veulent optimiser avec des stats + automation."
             />
           </Reveal>
         </div>
 
         <Reveal delay={0.2}>
           <div className="mx-auto mt-8 max-w-3xl text-center text-xs text-white/45">
-            Prices are editable in the config at the top of the file.
-            Remember to mention “Stripe fees excluded” anywhere you show 0% fees.
+            Les prix affichés sont modifiables dans le config en haut du fichier.
+            Pense à afficher “hors frais Stripe” partout où tu mentionnes 0% fees.
           </div>
         </Reveal>
       </section>
@@ -681,53 +682,54 @@ export default function HomePage() {
         <Reveal>
           <SectionTitle
             id="faq"
-            kicker="FAQ"
+            kicker="Questions fréquentes"
             title="FAQ"
-            desc="The goal: save you time and improve your chances of placements."
+            desc="Le but : te faire gagner du temps et augmenter tes chances de placements."
           />
         </Reveal>
 
         <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           <Reveal delay={0.05}>
             <FAQItem
-              q="Is the Free plan too limited?"
+              q="Est-ce que le Free plan est “trop limité” ?"
               a={
                 <>
-                  No. You can already centralize your packs, create clean links, and track basic
-                  signals. Upgrade only if you want industrial sending or advanced analytics.
+                  Non. Tu peux déjà centraliser tes packs, créer des liens propres et suivre les
+                  retours de base. Tu upgrades seulement si tu veux industrialiser l’envoi ou les
+                  analytics avancées.
                 </>
               }
             />
           </Reveal>
           <Reveal delay={0.12}>
             <FAQItem
-              q="What does 0% fees on Ultra mean?"
+              q="Le 0% fees sur Ultra, ça veut dire quoi ?"
               a={
                 <>
-                  It means 0% vvault marketplace fees on your sales.
-                  Stripe fees still apply (as everywhere).
+                  Ça veut dire 0% de frais de marketplace vvault sur tes ventes.
+                  Les frais Stripe restent applicables (comme partout).
                 </>
               }
             />
           </Reveal>
           <Reveal delay={0.18}>
             <FAQItem
-              q="Can I sell drumkits?"
+              q="Je peux vendre des drumkits ?"
               a={
                 <>
-                  Yes. And you already put your kits on vvault — perfect.
-                  Bonus: offer 1 month of Pro to each buyer to convert them into subscribers.
+                  Oui. Et tu as déjà mis tes kits sur vvault : c’est parfait.
+                  Bonus : tu peux offrir 1 mois Pro à chaque acheteur pour les transformer en abonnés.
                 </>
               }
             />
           </Reveal>
           <Reveal delay={0.24}>
             <FAQItem
-              q="Do I need a card to start?"
+              q="Je dois mettre une carte pour commencer ?"
               a={
                 <>
-                  It depends on your setup. Without a card, you maximize signups. With a card,
-                  you reduce volume but increase quality.
+                  Ça dépend de ton setup. Sans carte, tu maximises les inscriptions. Avec carte,
+                  tu réduis le volume mais tu augmentes la qualité.
                 </>
               }
             />
@@ -742,10 +744,10 @@ export default function HomePage() {
             <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
               <div className="max-w-xl">
                 <div className="text-lg font-semibold text-white">
-                  Join the waiting list
+                  Rejoins la waiting list
                 </div>
                 <p className="mt-1 text-sm text-white/60">
-                  Early access, product updates, and resources to land more placements.
+                  Accès anticipé, updates produit, et ressources pour placer plus de sons.
                 </p>
               </div>
 
@@ -755,7 +757,7 @@ export default function HomePage() {
                     id="email"
                     type="email"
                     required
-                    placeholder="you@email.com"
+                    placeholder="ton@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -765,7 +767,7 @@ export default function HomePage() {
                     className="whitespace-nowrap"
                     variant="accent"
                   >
-                    {isLoading ? "Working..." : "Join"}
+                    {isLoading ? "En cours..." : "Rejoindre"}
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
@@ -774,7 +776,7 @@ export default function HomePage() {
                   <p
                     className={cn(
                       "mt-3 text-sm",
-                      status === "success" ? "text-white/70" : "text-red-400"
+                    status === "success" ? "text-white/70" : "text-red-400"
                     )}
                   >
                     {message}
@@ -792,10 +794,10 @@ export default function HomePage() {
               Legal
             </a>
             <a className="hover:text-white/70" href={buildAppUrl("/login")}>
-              Log in
+              Login
             </a>
             <a className="hover:text-white/70" href={buildAppUrl("/signup", { plan: "free" })}>
-              Start free
+              Commencer gratuit
             </a>
           </div>
         </footer>
@@ -806,12 +808,12 @@ export default function HomePage() {
         <Card className="bg-black/70 p-3 shadow-[0_12px_60px_rgba(0,0,0,0.6)]">
           <div className="flex items-center justify-between gap-3">
             <div className="text-xs text-white/70">
-              Start free
-              <div className="text-[11px] text-white/45">Upgrade only if needed</div>
+              Commencer gratuit
+              <div className="text-[11px] text-white/45">Upgrade seulement si besoin</div>
             </div>
             <Button asChild size="sm" variant="accent">
               <a href={buildAppUrl("/signup", { plan: "free" })}>
-                Start free
+                Commencer gratuit
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
