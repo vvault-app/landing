@@ -14,17 +14,15 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-2xl text-sm font-semibold transition will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 disabled:pointer-events-none disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-2xl text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 disabled:pointer-events-none disabled:opacity-60";
 
 const variants: Record<ButtonVariant, string> = {
-  default:
-    "bg-white text-black shadow-[0_12px_30px_rgba(255,255,255,0.15)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(255,255,255,0.22)]",
+  default: "border border-white/20 bg-white/10 text-white hover:bg-white/15",
   outline:
-    "border border-white/15 bg-black/30 text-white hover:-translate-y-0.5 hover:border-white/30 hover:bg-black/40",
+    "border border-white/20 bg-transparent text-white/80 hover:text-white hover:border-white/30",
   ghost: "text-white/70 hover:text-white",
-  soft: "border border-white/10 bg-white/5 text-white/80 hover:bg-white/10",
-  accent:
-    "bg-gradient-to-r from-emerald-200 via-white to-sky-200 text-black shadow-[0_12px_30px_rgba(56,189,248,0.22)] hover:-translate-y-0.5",
+  soft: "border border-white/10 bg-white/5 text-white/70 hover:bg-white/10",
+  accent: "border border-white/20 bg-white text-black hover:bg-white/90",
 };
 
 const sizes: Record<ButtonSize, string> = {

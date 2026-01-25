@@ -3,7 +3,6 @@
 :root {
   --background: #050509;
   --foreground: #e2e8f0;
-  --accent: #a7f3d0;
   color-scheme: dark;
 }
 
@@ -58,6 +57,16 @@ body {
 html,
 body {
   @apply antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Optionnel : petite amélioration pour focus-visible */

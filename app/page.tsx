@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import {
@@ -9,7 +9,6 @@ import {
   Cloud,
   Mail,
   ShieldCheck,
-  Timer,
   Sparkles,
   BadgeCheck,
   ShoppingBag,
@@ -116,7 +115,7 @@ function buildAppUrl(path: string, params?: Record<string, string>) {
   url.searchParams.set("utm_medium", "landing");
   url.searchParams.set("utm_campaign", "default");
 
-  // Essai Pro 7 jours auto à l'inscription (ton app doit gérer ce param)
+  // Paramètre d'onboarding (optionnel)
   url.searchParams.set("trial", "pro7");
 
   if (params) {
@@ -134,10 +133,7 @@ function SectionTitle(props: {
   return (
     <div className="mx-auto max-w-3xl text-center" id={props.id}>
       {props.kicker ? (
-        <Badge variant="soft" className="gap-2">
-          <Sparkles className="h-3.5 w-3.5" />
-          {props.kicker}
-        </Badge>
+        <Badge variant="soft">{props.kicker}</Badge>
       ) : null}
       <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
         {props.title}
@@ -177,7 +173,7 @@ function PlanCard(props: {
   return (
     <Card
       className={cn(
-        "relative overflow-hidden p-6 shadow-[0_18px_70px_rgba(0,0,0,0.55)] transition hover:-translate-y-1",
+        "relative flex h-full flex-col overflow-hidden p-6 shadow-[0_18px_70px_rgba(0,0,0,0.55)] transition hover:-translate-y-1",
         props.highlight
           ? "border-white/25 bg-white/[0.07]"
           : "border-white/10 bg-white/[0.045]"
@@ -187,7 +183,7 @@ function PlanCard(props: {
         <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
       ) : null}
 
-      <div className="relative">
+      <div className="relative flex h-full flex-col">
         <div className="flex items-center justify-between gap-3">
           <div className="text-lg font-semibold text-white">{props.name}</div>
           {props.badge ? (
@@ -218,7 +214,7 @@ function PlanCard(props: {
           </a>
         </Button>
 
-        <ul className="mt-6 space-y-2 text-sm text-white/70">
+        <ul className="mt-6 flex-1 space-y-2 text-sm text-white/70">
           {props.features.map((f) => (
             <li key={f} className="flex items-start gap-2">
               <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-white/70" />
@@ -261,7 +257,6 @@ export default function HomePage() {
 
   // UI
   const [billing, setBilling] = useState<Billing>("monthly");
-  const demoRef = useRef<HTMLDivElement | null>(null);
 
   const isLoading = status === "loading";
 
@@ -396,19 +391,19 @@ export default function HomePage() {
     <div className="group relative min-h-screen overflow-hidden bg-[#050509] text-white">
       {/* background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_120%_at_50%_0%,rgba(120,255,214,0.16),transparent_60%),radial-gradient(90%_120%_at_100%_10%,rgba(120,170,255,0.18),transparent_60%),radial-gradient(120%_120%_at_0%_80%,rgba(255,255,255,0.06),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_120%_at_50%_0%,rgba(255,255,255,0.1),transparent_60%),radial-gradient(90%_120%_at_100%_10%,rgba(255,255,255,0.08),transparent_60%),radial-gradient(120%_120%_at_0%_80%,rgba(255,255,255,0.05),transparent_65%)]" />
         <MotionDiv
-          className="absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(110,255,214,0.32),transparent_70%)] blur-3xl opacity-70"
+          className="absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18),transparent_70%)] blur-3xl opacity-60"
           animate={floatSlow}
           transition={floatSlowTransition}
         />
         <MotionDiv
-          className="absolute -bottom-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,rgba(106,170,255,0.3),transparent_70%)] blur-3xl opacity-50"
+          className="absolute -bottom-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16),transparent_70%)] blur-3xl opacity-45"
           animate={floatMedium}
           transition={floatMediumTransition}
         />
         <MotionDiv
-          className="absolute bottom-10 left-10 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),transparent_70%)] blur-2xl opacity-30"
+          className="absolute bottom-10 left-10 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1),transparent_70%)] blur-2xl opacity-25"
           animate={floatFast}
           transition={floatFastTransition}
         />
@@ -417,8 +412,8 @@ export default function HomePage() {
       </div>
 
       {/* top nav */}
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-6">
-        <nav className="flex items-center justify-between rounded-3xl border border-white/10 bg-white/5 px-5 py-3 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+      <div className="sticky top-4 z-20 mx-auto w-full max-w-6xl px-5 pt-6">
+        <nav className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/60 px-5 py-3 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
           <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white">
             vvault
           </div>
@@ -468,21 +463,17 @@ export default function HomePage() {
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-104px)] w-full max-w-6xl items-center px-5 pb-12">
         <motion.div initial="hidden" animate="show" variants={heroVariants} className="w-full">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex flex-wrap items-center justify-center gap-2">
-              <Badge variant="soft">Essai Pro 7 jours inclus</Badge>
-              {typeof waitlistCount === "number" ? (
-                <Badge
-                  className="text-[10px] normal-case tracking-normal"
-                  variant="outline"
-                >
+            {typeof waitlistCount === "number" ? (
+              <div className="inline-flex flex-wrap items-center justify-center gap-2">
+                <Badge className="text-[11px] normal-case" variant="outline">
                   {waitlistCount.toLocaleString()} producteurs inscrits
                 </Badge>
-              ) : null}
-            </div>
+              </div>
+            ) : null}
 
             <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
               Envoie tes beats comme un pro.
-              <span className="mt-3 block bg-gradient-to-r from-white via-emerald-100 to-sky-200 bg-clip-text text-transparent">
+              <span className="mt-3 block text-white/70">
                 Packs + tracking + relances + ventes — en un seul lien.
               </span>
             </h1>
@@ -494,24 +485,11 @@ export default function HomePage() {
             </p>
 
             <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button asChild size="lg" variant="accent" className="w-full sm:w-auto">
+              <Button asChild size="lg" variant="default" className="w-full sm:w-auto">
                 <a href={buildAppUrl("/signup", { plan: "free" })}>
-                  Créer mon compte (Free + essai Pro)
+                  Créer mon compte gratuitement
                   <ArrowRight className="h-4 w-4" />
                 </a>
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() =>
-                  demoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-                }
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto"
-              >
-                Voir la démo (90s)
-                <Timer className="h-4 w-4" />
               </Button>
             </div>
 
@@ -540,7 +518,7 @@ export default function HomePage() {
       </div>
 
       {/* VIDEO */}
-      <div ref={demoRef} className="relative z-10 mx-auto w-full max-w-5xl -mt-20 px-5 pb-16">
+      <div className="relative z-10 mx-auto w-full max-w-5xl -mt-20 px-5 pb-16">
         <Reveal>
           <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-[0_18px_70px_rgba(0,0,0,0.65)]">
             <div className="aspect-video w-full">
@@ -607,7 +585,7 @@ export default function HomePage() {
             id="pricing"
             kicker="Simple & clair"
             title="Choisis ton plan — commence gratuit"
-            desc="À l’inscription : Free + essai Pro 7 jours inclus. Tu upgrades seulement si tu veux envoyer / tracker / scaler."
+          desc="À l’inscription, tu démarres en Free. Tu upgrades seulement si tu veux envoyer / tracker / scaler."
           />
         </Reveal>
 
@@ -629,26 +607,26 @@ export default function HomePage() {
           </div>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <Reveal delay={0.1}>
+        <div className="mt-10 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
+          <Reveal delay={0.1} className="h-full">
             <PlanCard
               name="Free"
               badge="Pour tester"
               priceLine="0€"
-              subLine="+ essai Pro 7 jours inclus"
+              subLine="Commence gratuit"
               features={[
                 "Extension Chrome : tracking des opens (type MailSuite)",
                 "100MB de stockage",
                 "Liste de contacts complète",
                 "Génère des liens à partager",
               ]}
-              ctaLabel="Commencer (Free + essai)"
+              ctaLabel="Commencer gratuitement"
               ctaHref={buildAppUrl("/signup", { plan: "free" })}
-              footnote="Idéal pour setup ton workspace. Pendant l’essai Pro, tu testes l’envoi + analytics."
+              footnote="Idéal pour setup ton workspace. Tu passes en Pro seulement si tu veux aller plus loin."
             />
           </Reveal>
 
-          <Reveal delay={0.18}>
+          <Reveal delay={0.18} className="h-full">
             <PlanCard
               name="Pro"
               badge={billing === "annual" ? "2 mois offerts" : "Le plus populaire"}
@@ -668,7 +646,7 @@ export default function HomePage() {
             />
           </Reveal>
 
-          <Reveal delay={0.26}>
+          <Reveal delay={0.26} className="h-full">
             <PlanCard
               name="Ultra"
               badge="Pour scaler"
@@ -714,9 +692,9 @@ export default function HomePage() {
               q="Est-ce que le Free plan est “trop limité” ?"
               a={
                 <>
-                  Non, parce que tu as l’essai Pro 7 jours à l’inscription.
-                  Pendant l’essai, tu vois la magie (envoi + tracking), puis tu upgrades uniquement
-                  quand tu veux le faire sérieusement (mass send, analytics, automation).
+                  Non. Tu peux déjà centraliser tes packs, créer des liens propres et suivre les
+                  retours de base. Tu upgrades seulement si tu veux industrialiser l’envoi ou les
+                  analytics avancées.
                 </>
               }
             />
@@ -745,11 +723,11 @@ export default function HomePage() {
           </Reveal>
           <Reveal delay={0.24}>
             <FAQItem
-              q="Je dois mettre une carte pour l’essai ?"
+              q="Je dois mettre une carte pour commencer ?"
               a={
                 <>
-                  Ça dépend de ton setup. Si tu peux, je te conseille “sans carte” pour maximiser
-                  les inscriptions. Si tu mets une carte, tu réduis le volume mais tu augmentes la qualité.
+                  Ça dépend de ton setup. Sans carte, tu maximises les inscriptions. Avec carte,
+                  tu réduis le volume mais tu augmentes la qualité.
                 </>
               }
             />
@@ -757,17 +735,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* NEWSLETTER / UPDATES */}
+      {/* WAITING LIST */}
       <section className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16">
         <Reveal>
           <Card className="p-6">
             <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
               <div className="max-w-xl">
                 <div className="text-lg font-semibold text-white">
-                  Recevoir les updates & ressources
+                  Rejoins la waiting list
                 </div>
                 <p className="mt-1 text-sm text-white/60">
-                  Tips outreach, templates de relance, updates produit. (Tu peux te désinscrire à tout moment.)
+                  Accès anticipé, updates produit, et ressources pour placer plus de sons.
                 </p>
               </div>
 
@@ -782,7 +760,7 @@ export default function HomePage() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <Button type="submit" disabled={isLoading} className="whitespace-nowrap">
-                    {isLoading ? "En cours..." : "S’inscrire"}
+                    {isLoading ? "En cours..." : "Rejoindre"}
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
@@ -791,7 +769,7 @@ export default function HomePage() {
                   <p
                     className={cn(
                       "mt-3 text-sm",
-                      status === "success" ? "text-emerald-300" : "text-red-400"
+                    status === "success" ? "text-white/70" : "text-red-400"
                     )}
                   >
                     {message}
@@ -823,8 +801,8 @@ export default function HomePage() {
         <Card className="bg-black/70 p-3 shadow-[0_12px_60px_rgba(0,0,0,0.6)]">
           <div className="flex items-center justify-between gap-3">
             <div className="text-xs text-white/70">
-              Essai Pro 7 jours inclus
-              <div className="text-[11px] text-white/45">Commence gratuit → upgrade si besoin</div>
+              Commence gratuitement
+              <div className="text-[11px] text-white/45">Upgrade seulement si besoin</div>
             </div>
             <Button asChild size="sm">
               <a href={buildAppUrl("/signup", { plan: "free" })}>
