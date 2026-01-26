@@ -469,15 +469,9 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a
-              href={buildAppUrl("/login")}
-              className="text-xs font-semibold text-white/70 hover:text-white"
-            >
-              Log in
-            </a>
             <Button asChild variant="accent" size="sm">
-              <a href={buildAppUrl("/signup", { plan: "free" })}>
-                Start free
+              <a href={buildAppUrl("/login")}>
+                Log in
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
@@ -490,13 +484,13 @@ export default function HomePage() {
         <motion.div initial="hidden" animate="show" variants={heroVariants} className="w-full">
           <div className="mx-auto max-w-3xl text-center">
             <div className="inline-flex flex-wrap items-center justify-center gap-2">
-              <Badge className="text-[11px] normal-case text-white/60" variant="outline">
-                used by 200+ producers
-                <span className="relative ml-2 flex h-2 w-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] font-semibold text-white/70">
+                <span>used by 200+ producers</span>
+                <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                 </span>
-              </Badge>
+              </div>
             </div>
 
             <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -507,13 +501,6 @@ export default function HomePage() {
               <span className="block">Share beat packs in one link.</span>
               <span className="block">Pro trial unlocks sending + tracking so you follow up on time.</span>
             </ShimmerText>
-
-            <div className="mt-4 flex justify-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] font-semibold text-white/70">
-                <ShoppingBag className="h-3.5 w-3.5 text-white/70" />
-                <span>Buy any kit, get 1 month Pro</span>
-              </div>
-            </div>
 
             <div className="mx-auto mt-6 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" variant="accent" className="w-full sm:w-auto">
@@ -527,9 +514,6 @@ export default function HomePage() {
             <p className="mt-3 text-xs text-white/50">
               <span className="block">
                 Start free — 7-day Pro trial included (sending + tracking).
-              </span>
-              <span className="block">
-                After the trial, you stay on Free unless you upgrade to keep sending + analytics.
               </span>
             </p>
           </div>
