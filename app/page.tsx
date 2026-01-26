@@ -7,6 +7,7 @@ import {
   ArrowRight,
   BarChart3,
   Cloud,
+  ChevronDown,
   Mail,
   ShieldCheck,
   Sparkles,
@@ -439,32 +440,53 @@ export default function HomePage() {
           </div>
 
           <div className="hidden items-center gap-3 sm:flex">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">
-              Features
-            </span>
-            <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
-              <a href="#campaign" className="hover:text-white">
-                Campaign
+            <a href="#" className="text-xs font-semibold text-white/70 hover:text-white">
+              Home
+            </a>
+            <div className="relative group">
+              <a
+                href="#features"
+                className="flex items-center gap-1 text-xs font-semibold text-white/70 hover:text-white"
+                aria-haspopup="true"
+              >
+                Features
+                <ChevronDown className="h-3.5 w-3.5 text-white/50 transition group-hover:text-white/80" />
               </a>
-              <span className="text-white/20">/</span>
-              <a href="#library" className="hover:text-white">
-                Library
-              </a>
-              <span className="text-white/20">/</span>
-              <a href="#public-pages" className="hover:text-white">
-                Public pages
-              </a>
-              <span className="text-white/20">/</span>
-              <a href="#analytics-contact" className="hover:text-white">
-                Analytics & contact
-              </a>
+              <div className="pointer-events-none absolute left-0 top-full z-20 mt-2 w-56 translate-y-1 rounded-2xl border border-white/10 bg-black/90 p-2 opacity-0 shadow-[0_14px_55px_rgba(0,0,0,0.45)] backdrop-blur-xl transition group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                <a
+                  href="#campaign"
+                  className="block rounded-xl px-3 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white"
+                >
+                  Campaign
+                </a>
+                <a
+                  href="#library"
+                  className="block rounded-xl px-3 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white"
+                >
+                  Library
+                </a>
+                <a
+                  href="#public-pages"
+                  className="block rounded-xl px-3 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white"
+                >
+                  Public pages
+                </a>
+                <a
+                  href="#analytics-contact"
+                  className="block rounded-xl px-3 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white"
+                >
+                  Analytics & contact
+                </a>
+              </div>
             </div>
-            <span className="mx-1 h-4 w-px bg-white/10" />
             <a href="#pricing" className="text-xs font-semibold text-white/70 hover:text-white">
               Pricing
             </a>
             <a href="#faq" className="text-xs font-semibold text-white/70 hover:text-white">
               FAQ
+            </a>
+            <a href="#updates" className="text-xs font-semibold text-white/70 hover:text-white">
+              Get updates
             </a>
           </div>
 
@@ -513,7 +535,7 @@ export default function HomePage() {
 
             <p className="mt-3 text-xs text-white/50">
               <span className="block">
-                Start free — 7-day Pro trial included (sending + tracking).
+                Start free — 7-day Pro trial included (no credit card needed).
               </span>
             </p>
           </div>
@@ -540,7 +562,10 @@ export default function HomePage() {
       </div>
 
       {/* FEATURES */}
-      <section className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-12">
+      <section
+        id="updates"
+        className="relative z-10 mx-auto w-full max-w-6xl scroll-mt-28 px-5 pb-12"
+      >
         <Reveal>
           <SectionTitle
             id="features"
