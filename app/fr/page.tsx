@@ -524,7 +524,7 @@ export default function HomePage() {
             <div className="aspect-video w-full">
               <iframe
                 className="h-full w-full"
-                src="https://www.youtube.com/embed/nKfITo6LLts?rel=0&modestbranding=1"
+                src="https://www.youtube.com/embed/DOlLUSW9s2s?rel=0&modestbranding=1&autoplay=1&mute=1&playsinline=1"
                 title="vvault demo"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
